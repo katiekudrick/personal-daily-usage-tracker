@@ -1,186 +1,137 @@
 <!DOCTYPE html>
 <html>
-  <head>
+
+<head>
     <title>Item Tracker</title>
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-      integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk"
-      crossorigin="anonymous"
-    />
-   <link rel="stylesheet" href="style.css">
-  </head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+        integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous" />
+    <link rel="stylesheet" href="style.css">
+</head>
 
-  <body>
+<body>
     <div class="container mt-5">
-      <h1>Item Tracker</h1>
-      <div id="accordion">
-        <!-- Add Item Form -->
-        <div class="card">
-          <div class="card-header" id="headingOne">
-            <h5 class="mb-0">
-              <button
-                class="btn btn-link"
-                data-toggle="collapse"
-                data-target="#collapseOne"
-                aria-expanded="true"
-                aria-controls="collapseOne"
-              >
-                Add Item
-              </button>
-            </h5>
-          </div>
+        <h1>Item Tracker</h1>
+        <div id="accordion">
+            <!-- Add Item Form -->
+            <div class="card">
+                <div class="card-header" id="headingOne">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link" data-toggle="collapse" data-target="#collapseOne"
+                            aria-expanded="true" aria-controls="collapseOne">
+                            Add Item
+                        </button>
+                    </h5>
+                </div>
 
-          <div
-            id="collapseOne"
-            class="collapse show"
-            aria-labelledby="headingOne"
-            data-parent="#accordion"
-          >
-            <div class="card-body">
-              <form>
-                <div class="form-group">
-                  <label for="item-name">Item Name</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="item-name"
-                    placeholder="Enter item name"
-                  />
+                <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="item-name">Item Name</label>
+                                <input type="text" class="form-control" id="item-name" placeholder="Enter item name" />
+                            </div>
+                            <div class="form-group">
+                                <label for="item-description">Item Description</label>
+                                <textarea class="form-control" id="item-description" rows="3"></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="item-type">Item Type</label>
+                                <input type="text" class="form-control" id="item-type" placeholder="Enter item type" />
+                            </div>
+                            <div class="form-group">
+                                <label for="item-cost">Item Cost</label>
+                                <input type="number" class="form-control" id="item-cost"
+                                    placeholder="Enter item cost" />
+                            </div>
+                            <div class="form-group">
+                                <label for="item-quantity">Item Quantity</label>
+                                <input type="number" class="form-control" id="item-quantity"
+                                    placeholder="Enter item quantity" />
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="addItem()">
+                                Add Item
+                            </button>
+                        </form>
+                    </div>
                 </div>
-                <div class="form-group">
-                  <label for="item-description">Item Description</label>
-                  <textarea
-                    class="form-control"
-                    id="item-description"
-                    rows="3"
-                  ></textarea>
-                </div>
-                <div class="form-group">
-                  <label for="item-type">Item Type</label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="item-type"
-                    placeholder="Enter item type"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="item-cost">Item Cost</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="item-cost"
-                    placeholder="Enter item cost"
-                  />
-                </div>
-                <div class="form-group">
-                  <label for="item-quantity">Item Quantity</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="item-quantity"
-                    placeholder="Enter item quantity"
-                  />
-                </div>
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  onclick="addItem()"
-                >
-                  Add Item
-                </button>
-              </form>
             </div>
-          </div>
+
+            <!-- Log Usage Form -->
+            <div class="card">
+                <div class="card-header" id="headingTwo">
+                    <h5 class="mb-0">
+                        <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#collapseTwo"
+                            aria-expanded="false" aria-controls="collapseTwo">
+                            Log Usage
+                        </button>
+                    </h5>
+                </div>
+                <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
+                    <div class="card-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="item-name">Item Name</label>
+                                <select class="form-control" id="item-name">
+                                    <!-- Options will be added dynamically using JavaScript -->
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="item-usage-date">Item Usage Date</label>
+                                <input type="date" class="form-control" id="item-usage-date"
+                                    placeholder="Enter date of usage" />
+                            </div>
+                            <div class="form-group">
+                                <label for="item-usage-time">Item Usage Time</label>
+                                <input type="time" class="form-control" id="item-usage-time"
+                                    placeholder="Enter time of usage" />
+                            </div>
+                            <button type="button" class="btn btn-primary" onclick="logUsage()">
+                                Log Usage
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- Log Usage Form -->
-        <div class="card">
-          <div class="card-header" id="headingTwo">
-            <h5 class="mb-0">
-              <button
-                class="btn btn-link collapsed"
-                data-toggle="collapse"
-                data-target="#collapseTwo"
-                aria-expanded="false"
-                aria-controls="collapseTwo"
-              >
-                Log Usage
-              </button>
-            </h5>
-          </div>
-          <div
-            id="collapseTwo"
-            class="collapse"
-            aria-labelledby="headingTwo"
-            data-parent="#accordion"
-          >
-            <div class="card-body">
-              <form>
-                <div class="form-group">
-                  <label for="item-name">Item Name</label>
-                  <select class="form-control" id="item-name">
-                    <!-- Options will be added dynamically using JavaScript -->
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="item-usage">Item Usage</label>
-                  <input
-                    type="number"
-                    class="form-control"
-                    id="item-usage"
-                    placeholder="Enter number of times item was used"
-                  />
-                </div>
-                <button
-                  type="button"
-                  class="btn btn-primary"
-                  onclick="logUsage()"
-                >
-                  Log Usage
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
+        <!-- item-list.html Jinja2 Flask HTML Render -->
+        <table id="item-list">
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Type</th>
+                <th>Cost</th>
+                <th>Quantity</th>
+                <th>Total Cost</th>
+                <th>Usage</th>
+                <th>Cost Per Use</th>
+            </tr>
+            {% for item in items %}
+            <tr>
+                <td>{{ item.name }}</td>
+                <td>{{ item.description }}</td>
+                <td>{{ item.type }}</td>
+                <td>{{ item.cost }}</td>
+                <td>{{ item.quantity }}</td>
+                <td>{{ item.totalCost }}</td>
+                <td>{{ item.usage }}</td>
+                <td>{{ item.costPerUse }}</td>
+            </tr>
+            {% endfor %}
+        </table>
 
-      <!-- Item List Table -->
-      <table class="table mt-5">
-        <thead>
-          <tr>
-            <th scope="col">Item Name</th>
-            <th scope="col">Item Description</th>
-            <th scope="col">Item Type</th>
-            <th scope="col">Item Cost</th>
-            <th scope="col">Item Quantity</th>
-            <th scope="col">Total Cost</th>
-            <th scope="col">Usage</th>
-            <th scope="col">Cost per Use</th>
-          </tr>
-        </thead>
-        <tbody id="item-list">
-          <!-- Items will be added here dynamically using JavaScript -->
-        </tbody>
-      </table>
     </div>
 
-    <script
-      src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-      integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.16.0/dist/umd/popper.min.js"
-      integrity="sha384-JLxhK2ksnfEbK/J7VuFgZCn7cKj+HX9TkSDgTn0MzJZHpYZJzv98KwgJL0dDt"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
-      integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.16.0/dist/umd/popper.min.js"
+        integrity="sha384-JLxhK2ksnfEbK/J7VuFgZCn7cKj+HX9TkSDgTn0MzJZHpYZJzv98KwgJL0dDt"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
     <script src="app.js"></script>
-  </body>
+</body>
+
 </html>
