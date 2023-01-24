@@ -1,0 +1,461 @@
+tldr: frameworks exist for a reason
+
+--------------------------------------------------------
+web help resources:
+
+https://developer.mozilla.org/en-US/docs/Web/API/Document/getElementById
+
+https://www.freecodecamp.org/news/html-button-onclick-javascript-click-event-tutorial/
+
+https://www.w3schools.com/jsref/event_onclick.asp
+
+https://www.w3schools.com/js/js_htmldom_methods.asp
+
+--------------------------------------------------------
+chatgpt help history:
+
+Katie Kudrick
+how do I use onclick and getElementByID so that the user clicks a button on the browser page and then a list of items are shown? 
+You can use the onclick attribute to specify a JavaScript function to be called when a button is clicked, and the getElementById() method to access an element with a specific ID on the page. Here is an example of how you can use these together to show a list of items when a button is clicked:
+
+HTML:
+
+Copy code
+<button id="myButton">Show List</button>
+<ul id="myList" style="display: none;">
+  <li>Item 1</li>
+  <li>Item 2</li>
+  <li>Item 3</li>
+</ul>
+JavaScript:
+
+Copy code
+document.getElementById("myButton").onclick = function() {
+  document.getElementById("myList").style.display = "block";
+};
+This will make the list hidden by default (using the display: none; CSS rule), and when the button is clicked, the JavaScript function will execute and change the display property of the list to block, making it visible.
+
+
+
+Katie Kudrick
+How do I do this so that a dynamic json object is searched in memory to render onto the browser? 
+To display a dynamic JSON object on a browser page, you can use JavaScript to parse the JSON object and then use the Document Object Model (DOM) API to create and append elements to the page.
+
+Here is an example of how you can do this:
+
+Copy code
+const jsonObject = { "items": [ { "name": "Item 1", "description": "This is item 1" }, { "name": "Item 2", "description": "This is item 2" }, { "name": "Item 3", "description": "This is item 3" } ] };
+
+const myButton = document.getElementById("myButton");
+const myList = document.getElementById("myList");
+
+myButton.onclick = function() {
+    jsonObject.items.forEach(function(item) {
+        // create a new list item element
+        const newListItem = document.createElement("li");
+
+        // set the text content of the element to the item name
+        newListItem.textContent = item.name;
+
+        // append the new element to the list
+        myList.appendChild(newListItem);
+    });
+};
+This will create a new <li> element for each item in the jsonObject and add it to the myList element. This way, each time the button is clicked, it will loop through the jsonObject and create new elements for each item and add it to the page.
+
+You can also add the item's description or any other information to the new element, by adding it to the innerHTML or textContent of the new element.
+
+You can also use a library like React, Angular or Vue.js, which are JavaScript frameworks that help you to manage the dynamic rendering of your application, this way you can handle the data and the updates on a more efficient and organized way.
+
+
+
+Katie Kudrick
+ what does this error mean and how do I fix it? Uncaught SyntaxError: Cannot use import statement outside a module (at app.js:1:1)
+This error message indicates that you are using the import statement in a JavaScript file that is not set up as a module.
+
+In JavaScript, the import statement is used to import functionality from other modules. However, in order to use this statement, the JavaScript file must be set up as a module. To set up a JavaScript file as a module, you need to add the type="module" attribute to the <script> tag in your HTML file, like this:
+
+Copy code
+<script type="module" src="app.js"></script>
+This will tell the browser that the JavaScript file should be treated as a module, and that it is allowed to use the import statement.
+
+If you are using a bundler like webpack or browserify, you can also set the file extension to .mjs or .jsx to indicate that the file is a module and not a script.
+
+If you don't want to use the import statement, you can use the CommonJS module system, which uses the require() function to load modules. For example, instead of using
+
+Copy code
+import { someFunction } from './someModule.js';
+you would use
+
+Copy code
+const someFunction = require('./someModule.js').someFunction;
+You can also use the <script> tag without the type attribute, that will indicate that the file is a script and it can't use the import statement.
+
+Also, you can use a module transpiler like Babel to convert your ES6 import statement to the CommonJS require statement which can run in any environment.
+
+
+
+Katie Kudrick
+How do I fix this? Uncaught TypeError: Failed to resolve module specifier "node-fetch". Relative references must start with either "/", "./", or "../".
+This error message indicates that the JavaScript file is trying to import the "node-fetch" module using a relative path, but the path does not start with "/", "./", or "../".
+
+The node-fetch module is a library that allows you to make HTTP requests in Node.js, but it is not a built-in module of JavaScript like fetch, so it has to be installed and imported in the correct way.
+
+One way to fix this issue is to install the node-fetch module using npm (Node Package Manager) and then import it into your JavaScript file.
+
+Here is an example of how you can do this:
+
+Install the node-fetch package using npm by running the command npm install node-fetch in your project's root directory.
+In your JavaScript file, import the node-fetch module at the top of the file like this:
+Copy code
+const fetch = require('node-fetch');
+Use the fetch function like this:
+Copy code
+fetch('https://jsonplaceholder.typicode.com/todos/1')
+  .then(response => response.json())
+  .then(data => console.log(data))
+Alternatively, you can use a package manager like yarn to install the package, with the command yarn add node-fetch.
+
+Another way to fix this issue is to use a package that provides a fetch polyfill. isomorphic-fetch is a good option, you can install it with npm or yarn and then use it instead of node-fetch
+
+Copy code
+const fetch = require('isomorphic-fetch');
+Also, make sure that the file where the import is happening is being run on a Node environment, since node-fetch module is meant to be used on Node.js and not on the browser.
+
+If you are running your code on the browser, you can use the fetch function built-in the browser or use a library like axios which can be used both in the browser and in Node.js.
+
+
+
+Katie Kudrick
+How do I fix this?  (tracker) katiekudrick@Katies-MBP second-try % node app.js
+/Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js:1
+const fetch = require('node-fetch')
+              ^
+
+Error [ERR_REQUIRE_ESM]: require() of ES Module /Users/katiekudrick/node_modules/node-fetch/src/index.js from /Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js not supported.
+Instead change the require of index.js in /Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js to a dynamic import() which is available in all CommonJS modules.
+    at Object.<anonymous> (/Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js:1:15) {
+  code: 'ERR_REQUIRE_ESM'
+}
+This error message is indicating that you are trying to use the require function to import a CommonJS module (node-fetch) in a JavaScript file that is using the ECMAScript modules (ESM) system.
+
+ECMAScript modules (ESM) are a way to include and reuse JavaScript code. The ESM system uses the import statement to import functions, objects, or primitive values from other files, whereas CommonJS modules use the require function to import modules.
+
+The error message suggests that you should change the require statement to a dynamic import statement. To fix this issue, you can change the import statement to the following:
+
+Copy code
+import fetch from 'node-fetch';
+You also have to make sure that your JavaScript file has the .mjs or .jsx extension, this will indicate that the file is using ECMAScript modules and not commonJS modules.
+
+Alternatively, you can use a transpiler like Babel to convert your ESM code to CommonJS code.
+
+Also, make sure that you are running the correct version of node, as ESM support was added to Node.js starting version 13.2.0.
+
+If you are running an older version of node, you can use a flag --experimental-modules to enable ESM support in node.
+
+Copy code
+node --experimental-modules app.mjs
+Another option could be to use a package manager like yarn or npm, to start your script, like this:
+
+Copy code
+npx node --experimental-modules app.mjs
+It's important to note that you need to have the node-fetch package installed in your project, you can install it by running npm install node-fetch or yarn add node-fetch in your project's root directory.
+
+--------------------------------------------------------
+terminal history: 
+
+source /Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/tracker/bin/activate
+katiekudrick@Katies-MBP cost_per_use_web_app % source /Users/katiekudrick/Document
+s/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/tracker/bin/activate
+(tracker) katiekudrick@Katies-MBP cost_per_use_web_app % ls
+README.md       jim-app.py      tracker         venv
+first-try       second-try      tracker.py
+(tracker) katiekudrick@Katies-MBP cost_per_use_web_app % cd second-try 
+(tracker) katiekudrick@Katies-MBP second-try % node app.js
+{ item_id: '7de84f62-6f43-4724-b821-435f29857e22' }
+{ item_ids: [ '7de84f62-6f43-4724-b821-435f29857e22' ] }
+(tracker) katiekudrick@Katies-MBP second-try % node app.js
+/Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js:63
+    getElementById('get-all').getRequest(url + "get_all_items", query)
+    ^
+
+ReferenceError: getElementById is not defined
+    at getAllItems (/Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js:63:5)
+    at Object.<anonymous> (/Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js:72:1)
+    at Module._compile (node:internal/modules/cjs/loader:1101:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)
+    at node:internal/main/run_main_module:17:47
+(tracker) katiekudrick@Katies-MBP second-try % node app.js
+{ item_id: 'ceb9a3cd-07b7-4824-a662-9c561460d8d5' }
+(tracker) katiekudrick@Katies-MBP second-try % node app.js
+/Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js:76
+const button = document.getElementById('get-all')
+               ^
+
+ReferenceError: document is not defined
+    at Object.<anonymous> (/Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js:76:16)
+    at Module._compile (node:internal/modules/cjs/loader:1101:14)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)
+    at node:internal/main/run_main_module:17:47
+(tracker) katiekudrick@Katies-MBP second-try % node app.js
+(node:50069) Warning: To load an ES module, set "type": "module" in the package.json or use the .mjs extension.
+(Use `node --trace-warnings ...` to show where the warning was created)
+/Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js:1
+import fetch from 'node-fetch'
+^^^^^^
+
+SyntaxError: Cannot use import statement outside a module
+    at Object.compileFunction (node:vm:352:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1031:15)
+    at Module._compile (node:internal/modules/cjs/loader:1065:27)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)
+    at node:internal/main/run_main_module:17:47
+(tracker) katiekudrick@Katies-MBP second-try % node app.js
+(node:50146) Warning: To load an ES module, set "type": "module" in the package.json or use the .mjs extension.
+(Use `node --trace-warnings ...` to show where the warning was created)
+/Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js:1
+import fetch from 'node-fetch'
+^^^^^^
+
+SyntaxError: Cannot use import statement outside a module
+    at Object.compileFunction (node:vm:352:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1031:15)
+    at Module._compile (node:internal/modules/cjs/loader:1065:27)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)
+    at node:internal/main/run_main_module:17:47
+(tracker) katiekudrick@Katies-MBP second-try % node app.js
+(node:50219) Warning: To load an ES module, set "type": "module" in the package.json or use the .mjs extension.
+(Use `node --trace-warnings ...` to show where the warning was created)
+/Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js:1
+import fetch from 'node-fetch'
+^^^^^^
+
+SyntaxError: Cannot use import statement outside a module
+    at Object.compileFunction (node:vm:352:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1031:15)
+    at Module._compile (node:internal/modules/cjs/loader:1065:27)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)
+    at node:internal/main/run_main_module:17:47
+(tracker) katiekudrick@Katies-MBP second-try % node app.js
+/Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js:1
+const fetch = require('node-fetch')
+              ^
+
+Error [ERR_REQUIRE_ESM]: require() of ES Module /Users/katiekudrick/node_modules/node-fetch/src/index.js from /Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js not supported.
+Instead change the require of index.js in /Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js to a dynamic import() which is available in all CommonJS modules.
+    at Object.<anonymous> (/Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js:1:15) {
+  code: 'ERR_REQUIRE_ESM'
+}
+(tracker) katiekudrick@Katies-MBP second-try % node app.js
+(node:50310) Warning: To load an ES module, set "type": "module" in the package.json or use the .mjs extension.
+(Use `node --trace-warnings ...` to show where the warning was created)
+/Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js:1
+import fetch from 'node-fetch'
+^^^^^^
+
+SyntaxError: Cannot use import statement outside a module
+    at Object.compileFunction (node:vm:352:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1031:15)
+    at Module._compile (node:internal/modules/cjs/loader:1065:27)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)
+    at node:internal/main/run_main_module:17:47
+(tracker) katiekudrick@Katies-MBP second-try % node app.js
+/Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js:1
+const fetch = require('node-fetch')
+              ^
+
+Error [ERR_REQUIRE_ESM]: require() of ES Module /Users/katiekudrick/node_modules/node-fetch/src/index.js from /Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js not supported.
+Instead change the require of index.js in /Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js to a dynamic import() which is available in all CommonJS modules.
+    at Object.<anonymous> (/Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js:1:15) {
+  code: 'ERR_REQUIRE_ESM'
+}
+(tracker) katiekudrick@Katies-MBP second-try % node app.js
+/Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js:1
+const fetch = require('node-fetch')
+              ^
+
+Error [ERR_REQUIRE_ESM]: require() of ES Module /Users/katiekudrick/node_modules/node-fetch/src/index.js from /Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js not supported.
+Instead change the require of index.js in /Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js to a dynamic import() which is available in all CommonJS modules.
+    at Object.<anonymous> (/Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js:1:15) {
+  code: 'ERR_REQUIRE_ESM'
+}
+(tracker) katiekudrick@Katies-MBP second-try % node app.js
+(node:50439) Warning: To load an ES module, set "type": "module" in the package.json or use the .mjs extension.
+(Use `node --trace-warnings ...` to show where the warning was created)
+/Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.js:1
+import fetch from 'node-fetch'
+^^^^^^
+
+SyntaxError: Cannot use import statement outside a module
+    at Object.compileFunction (node:vm:352:18)
+    at wrapSafe (node:internal/modules/cjs/loader:1031:15)
+    at Module._compile (node:internal/modules/cjs/loader:1065:27)
+    at Object.Module._extensions..js (node:internal/modules/cjs/loader:1153:10)
+    at Module.load (node:internal/modules/cjs/loader:981:32)
+    at Function.Module._load (node:internal/modules/cjs/loader:822:12)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:79:12)
+    at node:internal/main/run_main_module:17:47
+(tracker) katiekudrick@Katies-MBP second-try % node app.mjs
+file:///Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.mjs:29
+  for (key in query) {
+       ^
+
+ReferenceError: key is not defined
+    at getRequest (file:///Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.mjs:29:8)
+    at getAllItems (file:///Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.mjs:63:5)
+    at file:///Users/katiekudrick/Documents/Coding/2021-2022-Jim-Projects/cost_per_use_web_app/second-try/app.mjs:72:18
+    at ModuleJob.run (node:internal/modules/esm/module_job:183:25)
+    at async Loader.import (node:internal/modules/esm/loader:178:24)
+    at async Object.loadESM (node:internal/process/esm_loader:68:5)
+    at async handleMainPromise (node:internal/modules/run_main:63:12)
+(tracker) katiekudrick@Katies-MBP second-try % 
+
+
+
+
+import { Router } from 'express'
+const router = Router()
+import fetch from 'node-fetch'
+const url = 'http://localhost:5000/'
+
+
+// for api add_item && /use_item endpoints
+router.post('/', async function postRequest(url, requestObject) {
+  const options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(requestObject)
+  }
+
+  fetch(url, options)
+    .then(res => res.json())
+    .then(json => console.log(json))
+    .catch(error => console.error(error))
+
+    try {
+        const res = await fetch(url, options)
+        const json = await res.json()
+        console.log(json)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+// for api /get_item/<item_id> && /get_all_items endpoints
+router.get('/', async function getRequest(url, query) {
+  const options = {
+    method: 'GET'
+  }
+
+  let queryString = ""
+
+  for (key in query) {
+    if (queryString === "") {
+      queryString += "?"
+    } else {
+      queryString += "&"
+    }
+    queryString += key + "=" + query[key]
+  }
+
+  fetch(url + queryString, options)
+    .then(res => res.json())
+    .then(json => console.log(json))
+    .catch(error => console.error(error))
+
+    try {
+        const res = await fetch(url, options)
+        const json = await res.json()
+        console.log(json)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+export default router;
+
+// test case function for add_item endpoint
+function addItem(item) {
+    postRequest(url + "add_item", item)
+}
+
+// happy test case for /add_item test POST
+let add_item_good = {
+    category: "Sports Bras",
+    name: "Longline Racerback Sports Bra",
+    description: "Black, Old Navy, Medium Support",
+    cost: "15",
+    purchase_date: "12-30-22"
+}
+addItem(add_item_good)
+
+
+// test case function for get_all_items endpoint
+function getAllItems(query) {
+    getRequest(url + "get_all_items", query)
+}
+
+// happy test case for /get_all_items GET
+const get_all_items = {
+    category: "Sports Bras",
+    index: 0,
+    count: 10
+}
+// getAllItems(get_all_items)
+
+// I know I need to use document.getElementById('get-all'), but where do I put it? part of getAllItems() or get_all_items_good? 
+
+// const button = document.addEventListener.getElementById.forEach('get-all')
+// const list = document.getElementById('all-items-list')
+
+// button.click(() => {
+//     const li_tag = document.createElement('li')
+//     li_tag.textContent = item
+//     list.appendChild(li_tag)
+//   })
+
+function seeAll() {
+    const btn = document.addEventListener.getElementById('items').value
+    document.getElementById('all-items-list').innerHTML = btn
+}
+
+
+
+// get the #get-items field
+const all_items_button = document.querySelector("#get-items");
+
+// get the #all-items-list container
+const all_items = document.querySelector("#all-items-list");
+
+document.addEventListener("submit",() => (event) {
+    // only run for the question-all-items div only
+    if (event.target.id !== "question-all-items") return;
+
+    // send all items to browswer
+    var li = document.createElement("li");
+    li.innerHTML = all_items_button.value;
+    all_items.appendChild(li);
+
+    // clear field to refresh
+    all_items_button.value = "";
+})
