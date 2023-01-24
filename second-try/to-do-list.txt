@@ -1,0 +1,49 @@
+12.28.22 EMAIL FROM JIM
+
+To run this, put tracker.py into a folder by itself and then you'll need to do the following on the command line in that folder to set up a virtual environment and install flask...
+
+pip install virtualenv
+python3 -m virtualenv -p python3 tracker
+source tracker/bin/activate
+pip install flask
+
+Then you can run it with:
+python3 tracker.py
+
+Then in another terminal, you can make a request to it with curl...
+
+curl -D GET "localhost:5000/get_all_items?category=clothes&index=0&count=10"
+
+
+Note that you must have the virtual environment running any time you start the server. To do that, you can just run "source tracer/bin/activate" in the folder that has tracker.py.
+
+------------------------------------------------------------
+
+katiekudrick@Katies-MBP second-try % chmod 755 test.sh
+
+------------------------------------------------------------
+
+01.17.23 TO DO LIST, DONE BY FRIDAY
+
+##create html file with nothing in it
+except for:
+##    h1 that is the item tracker
+##    div empty but with an id
+
+##create a new javascript file to link to the new html file
+
+##copy and paste get and post functions into a new javascript file 
+
+##copy happy path scenario for get all items into the javascript file
+
+add documentOnLoad thing to call javascript function that calls get request function for get all items
+    take the returned json object and display on html page
+
+------------------------------------------------------------
+
+01.24.23 TO DO LIST
+
+figure out chrome cache fix
+
+
+W3dn3sd@yC@r!
