@@ -4,24 +4,29 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Personal Inventory: All Items</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
+    <div id="page-info">
+        <h2>Complete Inventory Catalog</h2>
 
-    <div id="get-all">
-        <div id="question-all-items">
-            <h2>Would you like to see all of your items?</h2>
-            <label for="get-items">Click Your Pick</label>
-            <button>NO</button>
-            <button type="submit" name="get-items" id="get-items">YES</button>
-            <!-- <input type="button" value="See Items" onclick="seeAll(getAllItems(get_all_items))" id="items"></input> -->
-        </div>
-
-        <ul id="all-items-list"></ul>
-    </div>    
-
+        <table id="all-items-table">
+            <thead>
+                <tr>
+                    <th>Item ID#</th>
+                    <th>Category</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Count</th>
+                </tr>
+            </thead>
+            <tbody id="rows-all-items">
+                <!-- JS DOM MANIPULATION GO HERE -->
+            </tbody>
+        </table>
+    </div>
 
 
 

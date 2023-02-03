@@ -1,39 +1,6 @@
-//import fetch from 'node-fetch';
 const url = 'http://127.0.0.1:5000/';
 
-// import express from 'express';
-// const app = express();
-// app.get('/', function(req,res) {
-//     res.send(browserRefresh('index.html'))
-// });
-  
-// function browserRefresh(filePath) {
-//     var html = fs.readFileSync(filePath);
-//     var $ = cheerio.load(html);
-//     $('body').append(`<script src="${process.env.BROWSER_REFRESH_URL}"></script>`)
-//     return $.html();
-// };
 
-// for api add_item && /use_item endpoints
-function postRequest(url, requestObject) {
-  const options = {
-    method: 'POST',
-    mode: 'cors',
-    credentials: 'same-origin',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(requestObject)
-  };
-
-  fetch(url, options)
-    .then(res => {
-        if (!res.ok) { throw res }
-        return res.json()
-    })
-    .then(json => console.log(json))
-    .catch(error => console.error(error));
-};
 
 // for api /get_item/<item_id> && /get_all_items endpoints
 function getRequest(url, query) {
@@ -69,21 +36,10 @@ function getRequest(url, query) {
     .catch(error => console.log(error));
 };
 
-// test case function for add_item endpoint
-// function addItem(item) {
-//     postRequest(url + "add_item", item);
-// };
+// call get all items to get the item id and list those
+// and then for each item id in the list you can then get item.category, item.name, item.description, etc, etc...
 
-// // happy test case for /add_item test POST
-// let add_item_good = {
-//     category: "Sports Bras",
-//     name: "Longline Racerback Sports Bra",
-//     description: "Black, Old Navy, Medium Support",
-//     cost: "15",
-//     purchase_date: "12-30-22"
-// };
-// addItem(add_item_good);
-
+// https://gist.github.com/thegitfather/9c9f1a927cd57df14a59c268f118ce86
 
 // test case function for get_all_items endpoint
 function getAllItems(query) {
@@ -96,25 +52,82 @@ const get_all_items = {
     index: 0,
     count: 10
 };
-getAllItems(get_all_items);
+const allItemsList = JSON.stringify(getAllItems(get_all_items));
+
+
+// Used this documentation as guidance: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Traversing_an_HTML_table_with_JavaScript_and_DOM_Interfaces
+function generateAllItemsTable() {
+  var grabTable = document.getElementById("all-items-table");
+  var grabTableBody = document.getElementById("rows-all-items");
+
+  // creating all cells
+  for (let i = 0; i <= 100; i++) {
+    // create <tr> html tags
+    var createTableRows = document.createElement("tr");
+    // generate cell text & insert
+    for (let j = 0; j <= 5; j++) {
+      // create <td> html tags
+      var createTableCell = document.createElement("td");
+      // create text from json object by noding <td> contents
+      var cellText = document.createTextNode(allItemsList);
+      // insert <td> into <tr>
+      createTableCell.appendChild(cellText);
+      // insert <tr> into <tbody>
+      createTableRows.appendChild(createTableCell);
+    }
+    // add the row to the end of the table body
+    grabTableBody.appendChild(createTableRows)
+  }
+  // put the <tbody> in the <table>
+  grabTable.appendChild(grabTableBody);
+  // appends <table> into <body>
+  document.body.appendChild(grabTable);
+  grabTable.setAttribute("border", "2");
+}
+
+generateAllItemsTable();
 
 
 
 
 
-// I know I need to use document.getElementById('get-all'), but where do I put it? part of getAllItems() or get_all_items_good? 
 
-// const button = document.addEventListener.getElementById.forEach('get-all')
-// const list = document.getElementById('all-items-list')
+// Next Section to Work On:
 
-// button.click(() => {
-//     const li_tag = document.createElement('li')
-//     li_tag.textContent = item
-//     list.appendChild(li_tag)
-//   })
+// for api add_item && /use_item endpoints
+function postRequest(url, requestObject) {
+  const options = {
+    method: 'POST',
+    mode: 'cors',
+    credentials: 'same-origin',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(requestObject)
+  };
 
-// function seeAll() {
-//     const btn = document.addEventListener.getElementById('items').value
-//     document.getElementById('all-items-list').innerHTML = btn
-// }
+  fetch(url, options)
+    .then(res => {
+        if (!res.ok) { throw res }
+        return res.json()
+    })
+    .then(json => console.log(json))
+    .catch(error => console.error(error));
+};
 
+
+
+// test case function for add_item endpoint
+function addItem(item) {
+    postRequest(url + "add_item", item);
+};
+
+// happy test case for /add_item test POST
+let add_item_good = {
+    category: "Sports Bras",
+    name: "Longline Racerback Sports Bra",
+    description: "Black, Old Navy, Medium Support",
+    cost: "15",
+    purchase_date: "12-30-22"
+};
+addItem(add_item_good);

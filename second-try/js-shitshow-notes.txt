@@ -440,7 +440,8 @@ function seeAll() {
 }
 
 
-
+// DOM: load & display data with a button click
+// using this post as guidance: https://gomakethings.com/no-a-framework-is-not-faster-than-vanilla-js-dom-manipulation-but-it-can-be/
 // get the #get-items field
 const all_items_button = document.querySelector("#get-items");
 
