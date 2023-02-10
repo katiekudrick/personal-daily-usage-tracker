@@ -19,6 +19,8 @@ def add_item():
         # get the request data
         data = request.get_json()
 
+        print("/add_item args are %s"%(str(data)))
+
         # generate a unique item_id
         item_id = str(uuid.uuid4())
 
@@ -55,6 +57,8 @@ def use_item():
     # get the request data
     data = request.get_json()
 
+    print("/use_item args are %s"%(str(data)))
+
     required = ['item_id', 'use_date']
 
     errors = []
@@ -85,6 +89,8 @@ def get_item(item_id):
     if item_id not in items:
         return jsonify({'error': 'Item not found'}), 404
 
+    print("/get_item arg is %s"%(item_id))
+
     # get the item data
     item = items[item_id]
 
@@ -103,13 +109,18 @@ def get_item(item_id):
 def get_all_items():
     try:
         errors = []
+
     
         required = ['category', 'index', 'count']
     
         # stage one of error checking
+        args = {}
         for field in required:
            if not request.args.get(field):
-              errors.append('Missing ' + field)
+               errors.append('Missing ' + field)
+           else:
+               args[field] = request.args.get(field)
+        print("/get_all_items args are %s"%(str(args)))
     
         if errors:
             print("Returning errors: %s"%(errors))
@@ -148,6 +159,8 @@ def get_all_items():
                 if sorted_items.index(item) >= index
                 and sorted_items.index(item) < index + count
         ]
+
+        print("item_ids = %s"%(str(item_ids)))
     
         # return the item_ids
         return jsonify({'item_ids': item_ids})
