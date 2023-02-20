@@ -47,3 +47,9 @@ figure out chrome cache fix
 
 
 W3dn3sd@yC@r!
+
+ cost_per_use_web_app python3 jim-app.py
+
+second-try python3 -m http.server
+
+cost_per_use_web_app % . venv/bin/activate

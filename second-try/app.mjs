@@ -2,7 +2,6 @@ const url = 'http://127.0.0.1:5000/';
 
 // for api /get_item/<item_id> && /get_all_items endpoints
 async function getRequest(url, query) {
-  console.log("query= "+JSON.stringify(query))
   let queryString = "";
 
   for (let key in query) {
@@ -12,7 +11,6 @@ async function getRequest(url, query) {
       queryString += "&"
     }
     queryString += key + "=" + query[key]
-    console.log("queryString = "+queryString)
   }
 
   const address = url+queryString;
@@ -20,22 +18,30 @@ async function getRequest(url, query) {
     method: 'GET',
     headers: {"Content-Type": "application/json"},
   };
+
+  let response = await fetch(address, options)
+  let json = await response.json();
+
+  console.log("response.json()): " + JSON.stringify(json))
+
+  return json 
   
-  const response = await fetch(address, options)
-    .then((response) => {
-      if (!response.ok) {
-        console.log("If it's not json syntax after the equals sign, response is messed up. const response = " + response)
-        const message = `An error has occured: ${response.status}`
-        throw new Error(message)
-        }
-      console.log("Fetch worked past if statement, response status is: " + response.status)
-      return response.json()
-    })
-    .then((json) => { console.log(".then(json): " + JSON.stringify(json))})
-    .catch((error) => { console.log("ERROR MESSAGE: " + error) });
-  
-    console.log("const response = " + response);
-    return response
+  // await fetch(address, options)
+  //   .then((response) => {
+  //     if (!response.ok) {
+  //       console.log("If it's not json syntax after the equals sign, response is messed up. const response = " + response)
+  //       const message = `An error has occured: ${response.status}`
+  //       throw new Error(message)
+  //       }
+  //     console.log("Fetch worked past if statement, response status is: " + response.status)
+  //     return response.json()
+  //   })
+  //   .then((json) => { 
+  //     console.log(".then(json): " + JSON.stringify(json))
+  //     return (json.results)
+  //   })
+  //   .catch((error) => { console.log("ERROR MESSAGE: " + error) });
+
 
   // SUNDAY NIGHT NOTES: I NEED TO RETURN THE ARRAY ABOVE. BUT WHAT IS IT??? only hard coding a number to interate to works. don't know why allItemsList.length is fucking shit up. is only happy when use JSON.stringify() at var cellText = . 
 
@@ -60,8 +66,9 @@ async function getRequest(url, query) {
 // https://gist.github.com/thegitfather/9c9f1a927cd57df14a59c268f118ce86
 
 // test case function for get_all_items endpoint
-function getAllItems(query) {
-  return getRequest(url + "get_all_items", query);
+async function getAllItems(query) {
+  console.log("This is what getAllItems(query) returns: " + JSON.stringify(getRequest(url + "get_all_items", query)))
+  return await getRequest(url + "get_all_items", query);
 };
 
 // happy test case for /get_all_items GET
@@ -73,8 +80,8 @@ const get_all_items = {
 
 
 // Used this documentation as guidance: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Traversing_an_HTML_table_with_JavaScript_and_DOM_Interfaces
-function generateAllItemsTable() {
-  var allItemsList = getAllItems(get_all_items);
+async function generateAllItemsTable() {
+  var allItemsList = await getAllItems(get_all_items);
   var grabTable = document.getElementById("all-items-table");
   var grabTableBody = document.getElementById("rows-all-items");
 
