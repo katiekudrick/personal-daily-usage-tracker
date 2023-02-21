@@ -460,3 +460,39 @@ document.addEventListener("submit",() => (event) {
     // clear field to refresh
     all_items_button.value = "";
 })
+
+Throw away work:
+  // await fetch(address, options)
+  //   .then((response) => {
+  //     if (!response.ok) {
+  //       console.log("If it's not json syntax after the equals sign, response is messed up. const response = " + response)
+  //       const message = `An error has occured: ${response.status}`
+  //       throw new Error(message)
+  //       }
+  //     console.log("Fetch worked past if statement, response status is: " + response.status)
+  //     return response.json()
+  //   })
+  //   .then((json) => { 
+  //     console.log(".then(json): " + JSON.stringify(json))
+  //     return (json.results)
+  //   })
+  //   .catch((error) => { console.log("ERROR MESSAGE: " + error) });
+
+
+  // SUNDAY NIGHT NOTES: I NEED TO RETURN THE ARRAY ABOVE. BUT WHAT IS IT??? only hard coding a number to interate to works. don't know why allItemsList.length is fucking shit up. is only happy when use JSON.stringify() at var cellText = . 
+
+
+  // BELOW IS THE FETCH CODE BEFORE USING PROMISES
+  // fetch(url+queryString, options)
+  //   .then(res => {
+  //       console.log("Response status is " + res.status)
+
+  //       if (!res.ok) {
+  //           console.log("inside the !res.ok") 
+  //           throw new Error("Something went wrong") 
+  //       }
+  //       console.log("gets to here")
+  //       return res.json()
+  //   })
+  //   .then(json => console.log(JSON.stringify(json)))
+  //   .catch(error => console.log(error));

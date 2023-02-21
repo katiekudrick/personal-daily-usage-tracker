@@ -13,7 +13,7 @@ async function getRequest(url, query) {
     queryString += key + "=" + query[key]
   }
 
-  const address = url+queryString;
+  const address = url + queryString;
   const options = {
     method: 'GET',
     headers: {"Content-Type": "application/json"},
@@ -22,81 +22,74 @@ async function getRequest(url, query) {
   let response = await fetch(address, options)
   let json = await response.json();
 
-  console.log("response.json()): " + JSON.stringify(json))
+  console.log("For " + url + " Request at Query: " + JSON.stringify(query) + " Response Status: " + response.status)
 
   return json 
-  
-  // await fetch(address, options)
-  //   .then((response) => {
-  //     if (!response.ok) {
-  //       console.log("If it's not json syntax after the equals sign, response is messed up. const response = " + response)
-  //       const message = `An error has occured: ${response.status}`
-  //       throw new Error(message)
-  //       }
-  //     console.log("Fetch worked past if statement, response status is: " + response.status)
-  //     return response.json()
-  //   })
-  //   .then((json) => { 
-  //     console.log(".then(json): " + JSON.stringify(json))
-  //     return (json.results)
-  //   })
-  //   .catch((error) => { console.log("ERROR MESSAGE: " + error) });
-
-
-  // SUNDAY NIGHT NOTES: I NEED TO RETURN THE ARRAY ABOVE. BUT WHAT IS IT??? only hard coding a number to interate to works. don't know why allItemsList.length is fucking shit up. is only happy when use JSON.stringify() at var cellText = . 
-
-
-  // BELOW IS THE FETCH CODE BEFORE USING PROMISES
-  // fetch(url+queryString, options)
-  //   .then(res => {
-  //       console.log("Response status is " + res.status)
-
-  //       if (!res.ok) {
-  //           console.log("inside the !res.ok") 
-  //           throw new Error("Something went wrong") 
-  //       }
-  //       console.log("gets to here")
-  //       return res.json()
-  //   })
-  //   .then(json => console.log(JSON.stringify(json)))
-  //   .catch(error => console.log(error));
 };
 
 
 // https://gist.github.com/thegitfather/9c9f1a927cd57df14a59c268f118ce86
 
-// test case function for get_all_items endpoint
-async function getAllItems(query) {
-  console.log("This is what getAllItems(query) returns: " + JSON.stringify(getRequest(url + "get_all_items", query)))
-  return await getRequest(url + "get_all_items", query);
-};
 
-// happy test case for /get_all_items GET
-const get_all_items = {
-  category: "Sports Bras",
+// hard data during build for /get_all_items GET
+const test_get_items_in_category = {
+  category: "Tops",
   index: 0,
   count: 10
 };
 
+// fetch get_all_items
+async function getAllItems(items_request) {
+  return await getRequest(url + "get_all_items", items_request);
+};
+
+// fetch get_item/
+async function getItem(item_id) {
+  return await getRequest(url + "get_item/", item_id);
+};
+// getItem("9abca33d-3100-447f-a425-d5ccedd5d737");
+// console.log("getItem return: " + getItem("9abca33d-3100-447f-a425-d5ccedd5d737"));
+
 
 // Used this documentation as guidance: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Traversing_an_HTML_table_with_JavaScript_and_DOM_Interfaces
 async function generateAllItemsTable() {
-  var allItemsList = await getAllItems(get_all_items);
+  var items = await getAllItems(test_get_items_in_category);
+  console.log(items);
+
+  async function extract(items) {
+    if (items.item_ids) {
+      return extract(items.item_ids);
+    } else {
+      return items;
+    }
+  }
+  var item_ids = await extract(items)
+  console.log(item_ids);
+
+  // async function extract(json) {
+  // //  await JSON.parse(json, (key, value) => {
+  // //   console.log("parsed key from " + json + ": " + key);
+  // //   return value;
+  // //  })
+  // };
+
+  // var item_ids = extract(items);
+  // console.log("var item_ids = " + JSON.stringify(item_ids));
+
   var grabTable = document.getElementById("all-items-table");
   var grabTableBody = document.getElementById("rows-all-items");
 
-  console.log("allitemsList=" + JSON.stringify(allItemsList))
-
   // creating all cells
-  for (let i = 0; i <= 25; i++) {
+  for (var i = 0; i < items.item_ids.length; i++) {
     // create <tr> html tags
     var createTableRows = document.createElement("tr");
+    createTableRows.setAttribute("id", items.item_ids[i]);
     // generate cell text & insert
-    for (let j = 0; j <= 5; j++) {
+    for (var j = 0; j < 5; j++) {
       // create <td> html tags
       var createTableCell = document.createElement("td");
       // create text from json object by noding <td> contents
-      var cellText = document.createTextNode(JSON.stringify(allItemsList));
+      var cellText = document.createTextNode(JSON.stringify(items.item_ids[i]));
       // insert <td> into <tr>
       createTableCell.appendChild(cellText);
       // insert <tr> into <tbody>
@@ -133,8 +126,8 @@ function postRequest(url, requestObject) {
 
   fetch(url, options)
     .then(response => {
-        if (!response.ok) { throw response }
-        return response.json()
+      if (!response.ok) { throw response }
+      return response.json()
     })
     .then(json => console.log(json))
     .catch(error => console.error(error));
@@ -144,15 +137,16 @@ function postRequest(url, requestObject) {
 
 // test case function for add_item endpoint
 function addItem(item) {
-    postRequest(url + "add_item", item);
+  postRequest(url + "add_item", item);
 };
 
 // happy test case for /add_item test POST
 let add_item_good = {
-    category: "Sports Bras",
-    name: "Longline Racerback Sports Bra",
-    description: "Black, Old Navy, Medium Support",
-    cost: "15",
-    purchase_date: "12-30-22"
+  category: "Tops",
+  name: "T-Shirt",
+  description: "Black, Gap",
+  cost: "20",
+  purchase_date: "01-15-23"
 };
-addItem(add_item_good);
+// TODO: UNDO COMMENT BELOW
+// addItem(add_item_good);
