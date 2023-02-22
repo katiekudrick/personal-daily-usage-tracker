@@ -1,7 +1,7 @@
 const url = 'http://127.0.0.1:5000/';
 
-// for api /get_item/<item_id> && /get_all_items endpoints
-async function getRequest(url, query) {
+// call api /get_all_items endpoint
+async function getRequestObject(url, query) {
   let queryString = "";
 
   for (let key in query) {
@@ -13,18 +13,42 @@ async function getRequest(url, query) {
     queryString += key + "=" + query[key]
   }
 
-  const address = url + queryString;
+  const request = url + queryString;
   const options = {
     method: 'GET',
     headers: {"Content-Type": "application/json"},
   };
 
-  let response = await fetch(address, options)
+  let response = await fetch(request, options)
   let json = await response.json();
 
-  console.log("For " + url + " Request at Query: " + JSON.stringify(query) + " Response Status: " + response.status)
+  console.log("Fetching: " + request + " || Response Status: " + response.status)
 
   return json 
+};
+// fetch get_all_items
+async function getAllItems(category_json) {
+  return await getRequestObject(url + "get_all_items", category_json);
+};
+
+
+// call api /get_item endpoint
+async function getRequestString(request) {
+    const options = {
+    method: 'GET',
+    headers: {"Content-Type": "application/json"},
+  };
+
+  let response = await fetch(request, options)
+  let json = await response.json();
+
+  console.log("getRequestString(" + request + ") returned json = " + JSON.stringify(json));
+  console.log("Fetching: " + request + " || Response Status: " + response.status)
+  return json 
+};
+// fetch get_item/
+async function getItem(item_id) {
+  return await getRequestString(url + "get_item/" + item_id);
 };
 
 
@@ -38,65 +62,51 @@ const test_get_items_in_category = {
   count: 10
 };
 
-// fetch get_all_items
-async function getAllItems(items_request) {
-  return await getRequest(url + "get_all_items", items_request);
-};
-
-// fetch get_item/
-async function getItem(item_id) {
-  return await getRequest(url + "get_item/", item_id);
-};
-// getItem("9abca33d-3100-447f-a425-d5ccedd5d737");
-// console.log("getItem return: " + getItem("9abca33d-3100-447f-a425-d5ccedd5d737"));
-
 
 // Used this documentation as guidance: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Traversing_an_HTML_table_with_JavaScript_and_DOM_Interfaces
 async function generateAllItemsTable() {
+  // creates variable with json of fetched items per category request
   var items = await getAllItems(test_get_items_in_category);
   console.log(items);
 
-  async function extract(items) {
-    if (items.item_ids) {
-      return extract(items.item_ids);
-    } else {
-      return items;
-    }
-  }
-  var item_ids = await extract(items)
-  console.log(item_ids);
-
-  // async function extract(json) {
-  // //  await JSON.parse(json, (key, value) => {
-  // //   console.log("parsed key from " + json + ": " + key);
-  // //   return value;
-  // //  })
-  // };
-
-  // var item_ids = extract(items);
-  // console.log("var item_ids = " + JSON.stringify(item_ids));
-
+  // interacting with hard coded html tags
   var grabTable = document.getElementById("all-items-table");
   var grabTableBody = document.getElementById("rows-all-items");
 
-  // creating all cells
+  // creating table cells via javascript
   for (var i = 0; i < items.item_ids.length; i++) {
+    // creates variable with json of details of each item_id in items
+    var items_with_info = await getItem(items.item_ids[i]);
+    console.log(items_with_info);
+
     // create <tr> html tags
     var createTableRows = document.createElement("tr");
     createTableRows.setAttribute("id", items.item_ids[i]);
+
+    // match the item_id key in items_with_info to its corresponding <tr> id
+    var matchKey = items_with_info.keyToMatch;
+
     // generate cell text & insert
-    for (var j = 0; j < 5; j++) {
-      // create <td> html tags
-      var createTableCell = document.createElement("td");
-      // create text from json object by noding <td> contents
-      var cellText = document.createTextNode(JSON.stringify(items.item_ids[i]));
-      // insert <td> into <tr>
-      createTableCell.appendChild(cellText);
-      // insert <tr> into <tbody>
-      createTableRows.appendChild(createTableCell);
+    for (var key in items_with_info) {
+      if (items_with_info.hasOwnProperty(key)) {
+        // create <td> html tags
+        var createTableCell = document.createElement("td");
+        // create text from json object by noding <td> contents
+        var cellText = document.createTextNode(items_with_info[key]);
+        // insert <td> into <tr>
+        createTableCell.appendChild(cellText);
+        // insert <tr> into <tbody>
+        createTableRows.appendChild(createTableCell);
+      }
     }
-    // add the row to the end of the table body
-    grabTableBody.appendChild(createTableRows)
+    // find the <tr> element with the matching id & append the row to it
+    var matchingRow = document.getElementById(matchKey);
+    if (matchingRow) {
+      matchingRow.appendChild(createTableRows);
+    } else {
+      // if no matching row is found, add the row to the emd of the table body
+      grabTableBody.appendChild(createTableRows);
+    }
   }
   // put the <tbody> in the <table>
   grabTable.appendChild(grabTableBody);
@@ -104,11 +114,8 @@ async function generateAllItemsTable() {
   document.body.appendChild(grabTable);
   grabTable.setAttribute("border", "2");
 }
-
+// for now, manipuate dom on page load
 generateAllItemsTable();
-
-
-
 
 
 
