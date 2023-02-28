@@ -53,3 +53,30 @@ W3dn3sd@yC@r!
 second-try python3 -m http.server
 
 cost_per_use_web_app % . venv/bin/activate
+
+------------------------------------------------------------
+NEW TASKS FROM 02.28.23
+
+add backend endpoint /get_all_categories
+    add tests for curl 
+    add tests for javascript
+
+sketch out ideas for browser screens so to reference when builing/adding buttons/dropdowns/inputs/etc.
+
+    screen #1: complete spec for viewing items screens (drawing)
+        add item button at top
+        add selector for categories (drawing aka example in action)
+        each row, add a use item button
+        add button to view uses of each row, direct to view uses of item screen
+
+    screen #2: add item screen (drawing)
+    
+    screen #3: view uses of item screen (drawing)
+        change date record to date time 
+    
+no mas... for now
+    css
+    pagination of screens
+    design
+    sql
+    tests 
