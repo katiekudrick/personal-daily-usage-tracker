@@ -1,7 +1,8 @@
 const url = 'http://127.0.0.1:5000/';
 
 // call api /get_all_items endpoint
-async function getRequestObject(url, query) {
+// !!query must be a json object!!
+async function getAllItemsinCategory(query) {
   let queryString = "";
 
   for (let key in query) {
@@ -13,7 +14,7 @@ async function getRequestObject(url, query) {
     queryString += key + "=" + query[key]
   }
 
-  const request = url + queryString;
+  const request = url + "get_all_items" + queryString;
   const options = {
     method: 'GET',
     headers: {"Content-Type": "application/json"},
@@ -26,15 +27,13 @@ async function getRequestObject(url, query) {
 
   return json 
 };
-// fetch get_all_items
-async function getAllItems(category_json) {
-  return await getRequestObject(url + "get_all_items", category_json);
-};
 
 
-// call api /get_item endpoint
-async function getRequestString(request) {
-    const options = {
+// call api /get_item/ endpoint
+// !!item_id must be a number string!!
+async function getDetailedItem(item_id) {
+  const request = url + "get_item/" + item_id;
+  const options = {
     method: 'GET',
     headers: {"Content-Type": "application/json"},
   };
@@ -45,10 +44,6 @@ async function getRequestString(request) {
   console.log("getRequestString(" + request + ") returned json = " + JSON.stringify(json));
   console.log("Fetching: " + request + " || Response Status: " + response.status)
   return json 
-};
-// fetch get_item/
-async function getItem(item_id) {
-  return await getRequestString(url + "get_item/" + item_id);
 };
 
 
@@ -64,9 +59,9 @@ const test_get_items_in_category = {
 
 
 // Used this documentation as guidance: https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Traversing_an_HTML_table_with_JavaScript_and_DOM_Interfaces
-async function generateAllItemsTable() {
+async function generateFetchedItemsTable() {
   // creates variable with json of fetched items per category request
-  var items = await getAllItems(test_get_items_in_category);
+  var items = await getAllItemsinCategory(test_get_items_in_category);
   console.log(items);
 
   // interacting with hard coded html tags
@@ -76,7 +71,7 @@ async function generateAllItemsTable() {
   // creating table cells via javascript
   for (var i = 0; i < items.item_ids.length; i++) {
     // creates variable with json of details of each item_id in items
-    var items_with_info = await getItem(items.item_ids[i]);
+    var items_with_info = await getDetailedItem(items.item_ids[i]);
     console.log(items_with_info);
 
     // create <tr> html tags
@@ -99,6 +94,7 @@ async function generateAllItemsTable() {
         createTableRows.appendChild(createTableCell);
       }
     }
+
     // find the <tr> element with the matching id & append the row to it
     var matchingRow = document.getElementById(matchKey);
     if (matchingRow) {
@@ -115,7 +111,7 @@ async function generateAllItemsTable() {
   grabTable.setAttribute("border", "2");
 }
 // for now, manipuate dom on page load
-generateAllItemsTable();
+generateFetchedItemsTable();
 
 
 
