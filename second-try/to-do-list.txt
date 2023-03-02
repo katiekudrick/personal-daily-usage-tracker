@@ -57,9 +57,6 @@ cost_per_use_web_app % . venv/bin/activate
 ------------------------------------------------------------
 NEW TASKS FROM 02.28.23
 
-add backend endpoint /get_all_categories
-    add tests for curl 
-    add tests for javascript
 
 sketch out ideas for browser screens so to reference when builing/adding buttons/dropdowns/inputs/etc.
 
@@ -74,6 +71,10 @@ sketch out ideas for browser screens so to reference when builing/adding buttons
     screen #3: view uses of item screen (drawing)
         change date record to date time 
     
+add backend endpoint /get_all_categories
+    add tests for curl 
+    add tests for javascript
+
 no mas... for now
     css
     pagination of screens

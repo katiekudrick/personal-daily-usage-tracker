@@ -169,6 +169,21 @@ def get_all_items():
         traceback.print_exc()
         raise e
 
+@app.route('/get_all_categories', methods=['GET'])
+def get_all_categories():
+    categories=[]
+
+
+    for item in items:
+        category = items["category"]
+        if category not in categories:
+            categories.append(category)
+
+    
+    # return categories
+    return jsonify(categories)
+
+
 # @app.after_request
 # def after_request(response):
 #     response.headers.add('Access-Control-Allow-Origin', '*')
