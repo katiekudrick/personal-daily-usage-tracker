@@ -171,15 +171,22 @@ def get_all_items():
 
 @app.route('/get_all_categories', methods=['GET'])
 def get_all_categories():
+    print(items)
+    
     categories=[]
 
 
-    for item in items:
-        category = items["category"]
+    for item_id in items:
+        print(items[item_id])   
+        category = items[item_id]["category"]
+        
         if category not in categories:
             categories.append(category)
-
+            
     
+
+    print("categories = %s"%(str(categories)))
+
     # return categories
     return jsonify(categories)
 

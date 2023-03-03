@@ -1,7 +1,8 @@
-HTTP/1.1 400 BAD REQUEST
+HTTP/1.1 200 OK
 Server: Werkzeug/2.2.2 Python/3.9.7
-Date: Wed, 18 Jan 2023 00:16:36 GMT
+Date: Thu, 02 Mar 2023 20:57:01 GMT
 Content-Type: application/json
-Content-Length: 29
+Content-Length: 3
+Access-Control-Allow-Origin: *
 Connection: close
 
