@@ -25,66 +25,40 @@
                     <span onclick="document.getElementById('add-item-screen').style.display='none'" class="close-btn" title="Close Modal">&times;</span>
                     <div class="container">
    <!-- insert where to send data in form action -->
-                        <form action="">
+                        <form id="form-add-item">
                           <div class="row">
-                            <div class="col-25">
-                              <label for="category">Category</label>
-                            </div>
-                            <div class="col-75 dropdown">
-                                <select name="category" id="category">
-                                    <option value="all">All</option>
-                                    <option value="tops">Tops</option>
-                                    <option value="bottoms">Bottoms</option>
-                                    <option value="shoes">Shoes</option>
-                                    <option value="bras">Bras</option>
-                                    <option value="underwear">Underwear</option>
-                                    <option value="leisurewear">Leisurewear</option>
-                                    <option value="towels">Towels</option>
-                                    <option value="skincare">Skincare</option>
-                                    <option value="makeup">Make-Up</option>
-                                    <option value="haircare">Haircare</option>
+                            <label for="category">Category</label>
+                            <select  class="dropdown" name="category" id="add-item-cat">
+                                <option value="all">All</option>
+                                <option value="tops">Tops</option>
+                                <option value="bottoms">Bottoms</option>
+                                <option value="shoes">Shoes</option>
+                                <option value="bras">Bras</option>
+                                <option value="underwear">Underwear</option>
+                                <option value="leisurewear">Leisurewear</option>
+                                <option value="skincare">Skincare</option>
+                                <option value="makeup">Make-Up</option>
+                                <option value="haircare">Haircare</option>
     <!-- need help with add new category -->
-                                    <!-- <option value="#">+ Add New Category</option> -->
-                                </select>
-                            </div>
-                          </div>
-
+                                <!-- <option value="#">+ Add New Category</option> -->
+                            </select>
                           <div class="row">
-                            <div class="col-25">
-                              <label for="name">What is this?</label>
-                            </div>
-                            <div class="col-75">
-                              <input type="text" id="name" name="name" placeholder="i.e. T-Shirt, Old Navy">
-                            </div>
+                            <label for="name">What is this?</label>
+                            <input type="text" id="add-item-name" name="name" placeholder="i.e. T-Shirt, Old Navy">
                           </div>
-
                           <div class="row">
-                            <div class="col-25">
-                              <label for="name">Description:</label>
-                            </div>
-                            <div class="col-75">
-                              <input type="text" id="description" name="description" placeholder="i.e. Black, Crew">
-                            </div>
+                            <label for="description">Description:</label>
+                            <input type="text" id="add-item-desc" name="description" placeholder="i.e. Black, Crew">
                           </div>
-
                           <div class="row">
-                            <div class="col-25">
-                              <label for="name">Cost:</label>
-                            </div>
-                            <div class="col-75">
-                              <input type="number" id="cost" name="cost" placeholder="25.99">
-                            </div>
+                            <label for="cost">Cost: $</label>
+                            <input type="number" id="add-item-cost" name="cost" placeholder="25.99">
                           </div>
     <!-- date: better input option needed -->
                           <div class="row">
-                            <div class="col-25">
-                              <label for="name">Purchase Date:</label>
-                            </div>
-                            <div class="col-75">
-                              <input type="text" id="purchase-date" name="purchase-date" placeholder="01.15.1986">
-                            </div>
+                            <label for="purchase-date">Purchase Date:</label>
+                            <input type="text" id="add-item-date" name="purchase-date" placeholder="01.15.1986">
                           </div>
-
                           <div class="row">
                             <button type="submit">Add New Item</button>
                           </div>
@@ -108,6 +82,7 @@
                         <option value="shoes">Shoes</option>
                         <option value="bras">Bras</option>
                         <option value="underwear">Underwear</option>
+                        <option value="leisurewear">Leisurewear</option>
                         <option value="skincare">Skincare</option>
                         <option value="makeup">Make-Up</option>
                         <option value="haircare">Haircare</option>

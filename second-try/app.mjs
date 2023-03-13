@@ -152,6 +152,7 @@ view_now_btn.addEventListener("click", function(event) {
     getCategories();
   } else {
     show_category.innerText = `Current Category View: ${select.charAt(0).toUpperCase()}${select.slice(1)}`;
+// PASS ARG HERE ONCE ADD MORE TO API
     getCategories();
   }
 })
@@ -174,8 +175,36 @@ async function getCategories() {
 };
 
 
+// post api /add_item endpoint
+const add_form = document.getElementById("form-add-item");
+const add_category = document.querySelector("#add-item-cat");
+const add_name = document.querySelector("#add-item-name");
+const add_description = document.querySelector("#add-item-desc");
+const add_cost = document.querySelector("#add-item-cost");
+const add_date = document.querySelector("#add-item-date");
 
+add_form.addEventListener("submit", async function(event){
+  event.preventDefault();
 
+  const newItem = {
+    'category': add_category.value,
+    'name': add_name.value,
+    'description': add_description.value,
+    'cost': add_cost.value,
+    'purchase_date': add_date.value,
+  }
+
+  const response = await fetch('/add_item', {
+    method: 'POST',
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(newItem)
+  });
+
+  const data = await response.json();
+  console.log("Added New Item: " + data)
+});
+
+// !!!! HAVE NOT TESTED ADD NEW ITEM YET. NEED TO ADD HOW TO HANDLE FORM POST TO API
 
 
 // Next Section to Work On:
