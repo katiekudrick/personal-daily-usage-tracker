@@ -4,31 +4,146 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Inventory: All Items</title>
+    <title>Personal Inventory Tracking System</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Ubuntu+Condensed&display=swap" rel="stylesheet">
 </head>
 <body>
 
-    <div id="page-info">
-        <h2>Inventory List</h2>
+    <section class="anchor">
+        <header class="header">
+            <h1>Welcome to Your Personal Inventory Tracking System</h1>
+            <!-- Button: Add Item Pop-Up Screen -->
+            <button id="add-item-btn">Add New Item</button>
+            <!-- Add Item Pop-Up Screen -->
+            
+            <div id="add-item-screen" class="pop-up">
+                <!-- Modal content -->
+                <div class="pop-up-content">
+                    <span onclick="document.getElementById('add-item-screen').style.display='none'" class="close-btn" title="Close Modal">&times;</span>
+                    <div class="container">
+   <!-- insert where to send data in form action -->
+                        <form action="">
+                          <div class="row">
+                            <div class="col-25">
+                              <label for="category">Category</label>
+                            </div>
+                            <div class="col-75 dropdown">
+                                <select name="category" id="category">
+                                    <option value="all">All</option>
+                                    <option value="tops">Tops</option>
+                                    <option value="bottoms">Bottoms</option>
+                                    <option value="shoes">Shoes</option>
+                                    <option value="bras">Bras</option>
+                                    <option value="underwear">Underwear</option>
+                                    <option value="leisurewear">Leisurewear</option>
+                                    <option value="towels">Towels</option>
+                                    <option value="skincare">Skincare</option>
+                                    <option value="makeup">Make-Up</option>
+                                    <option value="haircare">Haircare</option>
+    <!-- need help with add new category -->
+                                    <!-- <option value="#">+ Add New Category</option> -->
+                                </select>
+                            </div>
+                          </div>
 
-        <table id="all-items-table">
-            <thead>
-                <tr>
-                    <th>Category</th>
-                    <th>Cost</th>
-                    <th>Description</th>
-                    <th>Item ID#</th>
-                    <th>Type</th>
-                    <th>Purchase Date</th>
-                    <th>Recorded Uses</th>
-                </tr>
-            </thead>
-            <tbody id="rows-all-items">
-                <!-- JS DOM MANIPULATION GO HERE -->
-            </tbody>
-        </table>
-    </div>
+                          <div class="row">
+                            <div class="col-25">
+                              <label for="name">What is this?</label>
+                            </div>
+                            <div class="col-75">
+                              <input type="text" id="name" name="name" placeholder="i.e. T-Shirt, Old Navy">
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-25">
+                              <label for="name">Description:</label>
+                            </div>
+                            <div class="col-75">
+                              <input type="text" id="description" name="description" placeholder="i.e. Black, Crew">
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <div class="col-25">
+                              <label for="name">Cost:</label>
+                            </div>
+                            <div class="col-75">
+                              <input type="number" id="cost" name="cost" placeholder="25.99">
+                            </div>
+                          </div>
+    <!-- date: better input option needed -->
+                          <div class="row">
+                            <div class="col-25">
+                              <label for="name">Purchase Date:</label>
+                            </div>
+                            <div class="col-75">
+                              <input type="text" id="purchase-date" name="purchase-date" placeholder="01.15.1986">
+                            </div>
+                          </div>
+
+                          <div class="row">
+                            <button type="submit">Add New Item</button>
+                          </div>
+                        </form>
+                      </div>
+
+                </div>
+            </div>
+        </header>
+    </section>
+
+    <section class="dynamic">
+        <div class="container" id="page-info">
+            <h2>Inventory List</h2>
+                <form class="row">
+                    <label for="category">Choose a Category to View:</label>
+                    <select name="category" id="table-dropdown">
+                        <option value="all">All</option>
+                        <option value="tops">Tops</option>
+                        <option value="bottoms">Bottoms</option>
+                        <option value="shoes">Shoes</option>
+                        <option value="bras">Bras</option>
+                        <option value="underwear">Underwear</option>
+                        <option value="skincare">Skincare</option>
+                        <option value="makeup">Make-Up</option>
+                        <option value="haircare">Haircare</option>
+                <!-- need help with add new category -->
+                        <!-- <option value="#">+ Add New Category</option> -->
+                    </select>
+                    <button type="submit" id="view-category">View Now</button>
+                    <h4 id="displayed-category"></h4>
+                </form>
+
+            <div id="table" class="table">
+    <!-- insert dynamic text here -->
+                <table id="all-items-table">
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>Cost</th>
+                            <th>Description</th>
+                            <th>Item ID#</th>
+                            <th>Type</th>
+                            <th>Purchase Date</th>
+                            <th>Recorded Uses</th>
+                            <th>Log Use</th>
+                            <!-- <th>Edit Item</th> -->
+                        </tr>
+                    </thead>
+    <!-- how do i add in the log button to the row with js? --> 
+    <!-- how do i add a link to usage info to open item info screen with js?-->
+                    <tbody id="rows-all-items">
+                        <!-- JS DOM MANIPULATION GO HERE -->
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </section>
 
 
 

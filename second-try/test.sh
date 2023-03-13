@@ -82,4 +82,4 @@ curl -D GET "localhost:5000/get_all_items?category=clothes&count=10"
 curl -D GET "localhost:5000/get_all_items?category=clothes&index=0"
 
 # /get_all_categories test GET
-curl -D GET "localhost:5000/get_all_categories"
+curl -D GET "localhost:5000/get_categories"

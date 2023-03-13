@@ -169,8 +169,8 @@ def get_all_items():
         traceback.print_exc()
         raise e
 
-@app.route('/get_all_categories', methods=['GET'])
-def get_all_categories():
+@app.route('/get_categories', methods=['GET'])
+def get_categories():
     print(items)
     
     categories=[]

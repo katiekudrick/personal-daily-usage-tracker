@@ -38,11 +38,11 @@ async function getDetailedItem(item_id) {
     headers: {"Content-Type": "application/json"},
   };
 
-  let response = await fetch(request, options)
+  let response = await fetch(request, options);
   let json = await response.json();
 
   console.log("getRequestString(" + request + ") returned json = " + JSON.stringify(json));
-  console.log("Fetching: " + request + " || Response Status: " + response.status)
+  console.log("Fetching: " + request + " || Response Status: " + response.status);
   return json 
 };
 
@@ -112,6 +112,69 @@ async function generateFetchedItemsTable() {
 }
 // for now, manipuate dom on page load
 generateFetchedItemsTable();
+
+
+// tutorial used for reference: https://www.w3schools.com/howto/howto_js_popup.asp
+// pop-up /add_item screen (html modal boxes)
+var pop_up = document.getElementById("add-item-screen");
+var add_item_btn = document.getElementById("add-item-btn");
+var span = document.getElementsByClassName("close-btn")[0];
+
+// click add_item_btn, open pop-up screen
+add_item_btn.onclick = function() {
+  pop_up.style.display = "block";
+}
+
+// click (x) to close pop-up
+span.onclick = function() {
+  pop_up.style.display = "none";
+}
+
+// user clicks anywhere outside of the modal, closes pop-up screen
+window.onclick = function(event) {
+  if (event.target == pop_up) {
+    pop_up.style.display = "none";
+  }
+}
+
+
+// call api /get_categories endpoint
+const category_dropdown = document.getElementById("table-dropdown");
+const view_now_btn = document.getElementById("view-category");
+const show_category = document.getElementById("displayed-category");
+
+view_now_btn.addEventListener("click", function(event) {
+  event.preventDefault();
+  const select = category_dropdown.value;
+
+  if (select == "all") {
+    show_category.innerText = "Current Category View: All";
+    getCategories();
+  } else {
+    show_category.innerText = `Current Category View: ${select.charAt(0).toUpperCase()}${select.slice(1)}`;
+    getCategories();
+  }
+})
+
+async function getCategories() {
+  const request = url + "get_categories";
+  const options = {
+    method: 'GET',
+    headers: {"Content-Type": "application/json"},
+  };
+  const select = category_dropdown.value;
+
+  let response = await fetch(request, options);
+  let json = await response.json();
+
+  console.log("Fetching: " + request + " || Response Status: " + response.status);
+  console.log("Category Select = " + select);
+  console.log("Category JSON = " + JSON.stringify(json));
+  return json 
+};
+
+
+
 
 
 

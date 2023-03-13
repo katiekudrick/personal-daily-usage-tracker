@@ -1,43 +1,204 @@
-/* Set the font family to Poppins for the entire page */
+/* todo: pick a uniform border color */
+
+/* 
+
+Night Blue: #2d545e
+Night Blue Shadow: #12343b 
+Sand Tan: #e1b382
+Sand Tan Shadow: #c89666
+
+Ragin Beige: #fff5d7
+Coral Pink: #ff5e6c
+Sleuthe Yellow: #feb300
+Pink Leaf: #ffaaab
+
+Grassy Green: #9bc400
+Purple Mountains Majesty: #8076a3
+Misty Mountain Pink: #f9c5bd
+Factory Stone Purple: #7c677f
+
+Green Treeline: #478559
+Purple baseline: #161748
+Pink highlight: #f95d9b
+Bluewater lowlight: #39a0ca
+
+Blue Popsicle: #0f2862
+Redline: #9e363a
+Purple Shadow: #091f36
+Grey Blue Leaf: #4f5f76
+
+*/
+
+
+/* Global */
 body {
+    background-color: #161748;
+    color: #f9c5bd;
     font-family: 'Poppins', sans-serif;
-  }
+}
+
+button {
+    background-color: #ff5e6c;
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    border-radius: 8px;
+}
+
+button:hover {
+    background-color: #af2632;
+}
   
-  /* Apply a dark background and light text color */
-  body {
-    background-color: #1c1c1c;
-    color: #ffffff;
-  }
-  
-  /* Style the table */
-  table {
+/* Tables */
+table {
     border-collapse: collapse;
     width: 100%;
     max-width: 100%;
     margin-bottom: 1rem;
-    background-color: #2b2b2b;
+    background-color: #8076a3;
     color: #ffffff;
-  }
+}
   
-  th,
-  td {
+th,
+td {
     padding: 0.75rem;
     vertical-align: top;
     text-align: left;
-    border-top: 1px solid #ffffff;
-  }
+    border-top: 1px solid #7c677f;
+}
   
-  th {
+th {
     font-weight: bold;
-    background-color: #1f1f1f;
-  }
+    background-color: #6c648b;
+    font-style: italic;
+    font-weight: 600;
+}
   
-  td {
-    border-bottom: 1px solid #ffffff;
-  }
+td {
+    border-bottom: 1px solid #7c677f;
+}
   
-  /* Optional: Add some hover effects to the table rows */
-  tbody tr:hover {
-    background-color: #3c3c3c;
-  }
+/* Optional: Add some hover effects to the table rows */
+tbody tr:hover {
+    background-color: #091f36;
+}
+
+/* Pop-Up Screens */
+.pop-up {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
   
+.pop-up-content {
+    background-color: #f9c5bd;
+    color: #12343b;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+}
+  
+.close-btn {
+    color: #396b78;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+  
+.close-btn:hover,
+.close-btn:focus {
+    color: #12343b;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Style inputs, */
+input[type=text] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    resize: vertical;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+  
+/* Style the label to display next to the inputs */
+label {
+    padding: 12px 12px 12px 0;
+    display: inline-block;
+}
+  
+  /* Style the submit button */
+input[type=submit] {
+    background-color: #04AA6D;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    float: right;
+}
+  
+/* Style the container */
+.container {
+    border-radius: 5px;
+    padding: 20px;
+  
+}
+
+/* Floating column for labels: 25% width */
+.col-25 {
+    float: left;
+    width: 25%;
+    margin-top: 6px;
+}
+  
+/* Floating column for inputs: 75% width */
+.col-75 {
+    float: left;
+    width: 75%;
+    margin-top: 6px;
+}
+  
+/* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+  
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+.col-25, .col-75, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+}
+}
